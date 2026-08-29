@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">ACE</string>
+    
+    <!-- Welcome Screen -->
+    <string name="welcome_title">ACE</string>
+    <string name="welcome_subtitle">Your intelligent personal assistant</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="email">Email</string>
+    <string name="fingerprint">Fingerprint</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="ace_branding">ACE</string>
+    
+    <!-- Email Login Screen -->
+    <string name="sign_in_with_email">Sign in with Email</string>
+    <string name="email_address">Email address</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="sign_in">Sign In</string>
+    <string name="back">Back</string>
+    
+    <!-- Authentication Messages -->
+    <string name="auth_error_email_required">Email is required</string>
+    <string name="auth_error_invalid_email">Invalid email format</string>
+    <string name="auth_error_password_required">Password is required</string>
+    <string name="auth_error_password_length">Password must be at least 6 characters</string>
+    <string name="auth_error_biometric_unavailable">Biometric authentication is not available on this device</string>
+    <string name="auth_error_biometric_not_enrolled">No biometric credentials enrolled. Please set up fingerprint in Settings</string>
+    <string name="auth_error_google_not_configured">Google Sign-In not configured. Please add your Web Client ID.</string>
+    <string name="auth_error_email_not_configured">Email authentication not configured. Please integrate with your backend.</string>
+    
+    <!-- Success Messages -->
+    <string name="auth_success">Authentication successful</string>
+    <string name="password_reset_sent">Password reset instructions sent to your email</string>
+    
+    <!-- Biometric Prompt -->
+    <string name="biometric_title">Sign in to ACE</string>
+    <string name="biometric_subtitle">Use your fingerprint to continue</string>
+    <string name="biometric_cancel">Cancel</string>
+</resources>

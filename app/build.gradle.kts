@@ -75,4 +75,5 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     debugImplementation(libs.androidx.ui.tooling)
     implementation(libs.play.services.tasks)
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
 }

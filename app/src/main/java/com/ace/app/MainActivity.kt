@@ -1,5 +1,9 @@
 package com.ace.app
 
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.ace.app.ui.model.ModelDownloadViewModel
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.activity.compose.setContent
@@ -9,8 +13,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.ui.platform.LocalContext
 import com.ace.app.ui.email.EmailLoginScreen
 import com.ace.app.ui.theme.AceTheme
@@ -69,21 +71,18 @@ fun AceApp() {
         composable("home") {
             val context = LocalContext.current
             val welcomeViewModel: WelcomeViewModel = viewModel()
+            val downloadViewModel: ModelDownloadViewModel = viewModel()
+            val isModelReady by downloadViewModel.isModelReady.collectAsState()
+
+            LaunchedEffect(isModelReady) {
+                if (isModelReady) {
+                    navController.navigate("next_screen") {
+                        popUpTo("home") { inclusive = true }
+                    }
+                }
+            }
 
             ModelDownloadScreen(
-                onDownloadClick = {
-                    val url =
-                        "https://drive.google.com/file/d/1Y2F6RNFAJs6SovHZGvZe7fXf-EdLiiRH/view?usp=sharing"
-
-                    val uri = Uri.parse(url)
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-
-                    try {
-                        context.startActivity(intent)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                },
                 onSignOutClick = {
                     welcomeViewModel.onSignOut(context)
                     navController.navigate("welcome") {

@@ -3,6 +3,7 @@ package com.ace.app
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import com.ace.app.ui.home.HomeScreen
 import com.ace.app.ui.model.ModelDownloadViewModel
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
@@ -90,6 +91,10 @@ fun AceApp() {
                     }
                 }
             )
+        }
+
+        composable("next_screen") {
+            HomeScreen()
         }
     }
 }

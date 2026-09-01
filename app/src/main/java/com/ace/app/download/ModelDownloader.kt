@@ -40,6 +40,15 @@ class ModelDownloader {
                     return@flow
                 }
 
+                // Google Drive returns an HTML error/quota page instead of the
+                // actual file when the download link is rate-limited. Detect
+                // that here before writing anything to disk.
+                val contentType = response.header("Content-Type") ?: ""
+                if (contentType.contains("text/html", ignoreCase = true)) {
+                    emit(DownloadState.Error("Google Drive quota exceeded or returned an error page. Try again later."))
+                    return@flow
+                }
+
                 val contentLength = response.body?.contentLength() ?: -1L
                 val totalBytes = if (existingBytes > 0) existingBytes + contentLength else contentLength
 

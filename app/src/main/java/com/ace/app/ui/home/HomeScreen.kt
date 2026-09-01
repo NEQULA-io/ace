@@ -755,43 +755,75 @@ fun HomeScreen() {
 
 
                 // =================================================
-                // YOUR CUSTOM MIC ICON
+                // SEND BUTTON (shown when there's text typed)
                 // =================================================
 
-                Box(
-                    modifier = Modifier
-                        .size(45.dp)
-                        .clip(CircleShape)
-                        .clickable {
+                if (inputText.isNotBlank()) {
 
-                            startMicrophone()
-                        },
+                    Box(
+                        modifier = Modifier
+                            .size(45.dp)
+                            .clip(CircleShape)
+                            .background(AcePurple)
+                            .clickable {
 
-                    contentAlignment =
-                        Alignment.Center
-                ) {
+                                sendMessage()
+                            },
 
-                    Image(
-                        painter =
-                            painterResource(
-                                id =
-                                    R.drawable.mic_icon
-                            ),
+                        contentAlignment =
+                            Alignment.Center
+                    ) {
 
-                        contentDescription =
-                            "Voice input",
+                        Text(
+                            text = "➤",
 
-                        contentScale =
-                            ContentScale.Fit,
+                            color = AceWhite,
 
-                        modifier =
-                            Modifier.size(
-                                if (isListening)
-                                    31.dp
-                                else
-                                    27.dp
-                            )
-                    )
+                            fontSize = 20.sp
+                        )
+                    }
+
+                } else {
+
+                    // =================================================
+                    // MIC ICON (shown when input is empty)
+                    // =================================================
+
+                    Box(
+                        modifier = Modifier
+                            .size(45.dp)
+                            .clip(CircleShape)
+                            .clickable {
+
+                                startMicrophone()
+                            },
+
+                        contentAlignment =
+                            Alignment.Center
+                    ) {
+
+                        Image(
+                            painter =
+                                painterResource(
+                                    id =
+                                        R.drawable.mic_icon
+                                ),
+
+                            contentDescription =
+                                "Voice input",
+
+                            contentScale =
+                                ContentScale.Fit,
+
+                            modifier =
+                                Modifier.size(
+                                    if (isListening)
+                                        31.dp
+                                    else
+                                        27.dp
+                                )
+                        )
+                    }
                 }
             }
         }

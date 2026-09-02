@@ -33,6 +33,7 @@ fun ModelDownloadScreen(
     viewModel: ModelDownloadViewModel = viewModel()
 ) {
     val progress by viewModel.downloadProgress.collectAsState()
+    val error by viewModel.downloadError.collectAsState()
     val isDownloading = progress > 0f && progress < 1f
 
     AceBackground {
@@ -81,6 +82,17 @@ fun ModelDownloadScreen(
                         glowIntensity = 0.55f,
                         modifier = Modifier.fillMaxWidth()
                     )
+
+                    if (error != null) {
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        Text(
+                            text = error ?: "",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = androidx.compose.ui.graphics.Color(0xFFFF6B6B),
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))

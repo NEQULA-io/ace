@@ -70,6 +70,30 @@ fun AceApp() {
         }
 
         composable("home") {
+            val context = LocalContext.current
+            val welcomeViewModel: WelcomeViewModel = viewModel()
+            val downloadViewModel: ModelDownloadViewModel = viewModel()
+            val isModelReady by downloadViewModel.isModelReady.collectAsState()
+
+            LaunchedEffect(isModelReady) {
+                if (isModelReady) {
+                    navController.navigate("next_screen") {
+                        popUpTo("home") { inclusive = true }
+                    }
+                }
+            }
+
+            ModelDownloadScreen(
+                onSignOutClick = {
+                    welcomeViewModel.onSignOut(context)
+                    navController.navigate("welcome") {
+                        popUpTo("home") { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable("next_screen") {
             HomeScreen()
         }
     }

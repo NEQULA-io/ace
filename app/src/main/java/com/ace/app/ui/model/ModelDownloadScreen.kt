@@ -78,7 +78,11 @@ fun ModelDownloadScreen(
                 } else {
                     GlowButton(
                         text = if (progress >= 1f) "DOWNLOADED" else "DOWNLOAD NOW",
-                        onClick = { viewModel.startDownload() },
+                        onClick = {
+                            if (progress < 1f) {
+                                viewModel.startDownload()
+                            }
+                        },
                         glowIntensity = 0.55f,
                         modifier = Modifier.fillMaxWidth()
                     )

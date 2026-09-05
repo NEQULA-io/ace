@@ -1,5 +1,6 @@
 package com.ace.app.ui.model
 
+import com.ace.app.BuildConfig
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,12 +19,29 @@ class ModelDownloadViewModel(application: Application) : AndroidViewModel(applic
     // invalid/corrupt/incomplete (e.g. an HTML error page saved by mistake).
     private val minimumValidBytes = 1_000_000_000L
 
-    private fun modelFile(): File =
-    File(getApplication<Application>().getExternalMediaDirs()[0], "gemma-3n-e4b.gguf")
+    private fun modelFile(): File {
+        val context = getApplication<Application>()
+        return if (BuildConfig.DEBUG) {
+            // Testing only: fully visible in Downloads, easy to adb push into
+            File(
+                android.os.Environment.getExternalStoragePublicDirectory(
+                    android.os.Environment.DIRECTORY_DOWNLOADS
+                ),
+                "AceModels/gemma-3n-e4b.gguf"
+            )
+        } else {
+            // Real users: app-scoped external storage — no permissions, no prompts, survives across app updates
+            File(context.getExternalFilesDir(null), "gemma-3n-e4b.gguf")
+        }
+    }
 
     private fun isValidModelFile(file: File): Boolean =
         file.exists() && file.length() >= minimumValidBytes
 
+    init {
+        val f = modelFile()
+        android.util.Log.d("ModelCheck", "path=${f.absolutePath} exists=${f.exists()} length=${f.length()}")
+    }
     private val _downloadProgress = MutableStateFlow(if (isValidModelFile(modelFile())) 1f else 0f)
     val downloadProgress: StateFlow<Float> = _downloadProgress
 

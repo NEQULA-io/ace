@@ -19,7 +19,7 @@ class ModelDownloadViewModel(application: Application) : AndroidViewModel(applic
     private val minimumValidBytes = 1_000_000_000L
 
     private fun modelFile(): File =
-        File(getApplication<Application>().filesDir, "gemma-3n-e4b.gguf")
+    File(getApplication<Application>().getExternalMediaDirs()[0], "gemma-3n-e4b.gguf")
 
     private fun isValidModelFile(file: File): Boolean =
         file.exists() && file.length() >= minimumValidBytes
